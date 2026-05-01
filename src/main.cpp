@@ -30,27 +30,27 @@ int main()
 	Font font;
 	Clock clock;
 	    srand(time(0));
-	    RenderWindow window(VideoMode(550, 480), title);
+	    RenderWindow window(VideoMode({550, 480}), title);
 
 	Texture obj1, obj2, obj3;
 	obj1.loadFromFile( "assets/img/tiles.png" );
 	obj2.loadFromFile( "assets/img/background.png" );
 	obj3.loadFromFile( "assets/img/frame.png" );
-	font.loadFromFile("assets/font/OpenSans-Bold.ttf");
+	font.openFromFile("assets/font/OpenSans-Bold.ttf");
+	Text str_text(font), int_text(font), text(font);
 
 	Sprite tiles(obj1), background(obj2), frame(obj3);
-	Text str_text, int_text, text;
 
 	str_text.setFont(font);
 	str_text.setCharacterSize(24);
 	str_text.setString("YOUR SCORE: ");
-	str_text.setPosition(320, 20);
+	str_text.setPosition({320.f, 20.f});
 	str_text.setFillColor(Color::Black);
 	str_text.setStyle(Text::Bold);
 
 	int_text.setFont(font);
 	int_text.setCharacterSize(24);
-	int_text.setPosition(490, 20);
+	int_text.setPosition({490.f, 20.f});
 	int_text.setFillColor(Color::Red);
 	int_text.setStyle(Text::Bold);
 
@@ -58,42 +58,37 @@ int main()
 	text.setFont(font);
 	text.setCharacterSize(24);
 	text.setString("GAME OVER!!!");
-	text.setPosition(320, 60);
+	text.setPosition({320.f, 60.f});
 	text.setFillColor(Color::Red);
 	text.setStyle(Text::Bold);
 	
 	while (window.isOpen())
 	{
-	if(!font.loadFromFile("assets/font/OpenSans-Bold.ttf"))
+	if(!font.openFromFile("assets/font/OpenSans-Bold.ttf"))
 	throw("COULD NOT LOAD FONT");
 	float time = clock.getElapsedTime().asSeconds();
 		clock.restart();
 		timer+=time;
-		Event e;
-			//---Event Listening Part---//
-		    while (window.pollEvent(e))
-		    {
-			    if (e.type == Event::Closed)
-				window.close(); 
-			     //else if (e.type == Event::LostFocus)
-			                    
-			    if (e.type == Event::KeyPressed)
-			    {
-				if (e.key.code == Keyboard::Escape)
-				   window.close();
-				else if (e.key.code == Keyboard::Up)
-				    rotate = true;
-				else if (e.key.code == Keyboard::Left)
-				    delta_x = -1;
-				else if (e.key.code == Keyboard::Right)
-				    delta_x = 1;
-				
-				//else if (e.key.code == Keyboard::Space)
-				  //  delay=0.00000000001;
-			    }
-		    }
-			if (Keyboard::isKeyPressed(Keyboard::Down))
-			    delay=0.05;  
+		while (const std::optional event = window.pollEvent())
+		{
+			if (event->is<Event::Closed>())
+				window.close();
+
+			if (const auto* keyPressed = event->getIf<Event::KeyPressed>())
+			{
+				if (keyPressed->code == Keyboard::Key::Escape)
+					window.close();
+				else if (keyPressed->code == Keyboard::Key::Up)
+					rotate = true;
+				else if (keyPressed->code == Keyboard::Key::Left)
+					delta_x = -1;
+				else if (keyPressed->code == Keyboard::Key::Right)
+					delta_x = 1;
+			}
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+			delay = 0.05f;
 			//if (Keyboard::isKeyPressed(Keyboard::Space))
 			    
         ///////////////////////////////////////////////
@@ -132,17 +127,17 @@ int main()
 			    {
 				if (gameGrid[i][j]==0)
 				    continue;
-				tiles.setTextureRect(IntRect(gameGrid[i][j]*18,0,18,18));
-				tiles.setPosition(j*18,i*18);
-				tiles.move(28,31); //offset
+				tiles.setTextureRect(IntRect({gameGrid[i][j]*18, 0}, {18, 18}));
+				tiles.setPosition({static_cast<float>(j*18), static_cast<float>(i*18)});
+				tiles.move({28.f, 31.f}); //offset
 				window.draw(tiles);
 			    }
 		}
 		for (int i=0 ; i<4 ; i++)
 		{
-			tiles.setTextureRect(IntRect(colorNum*18,0,18,18));
-			tiles.setPosition(point_1[i][0]*18,point_1[i][1]*18);
-			tiles.move(28,31);
+			tiles.setTextureRect(IntRect({colorNum*18, 0}, {18, 18}));
+			tiles.setPosition({static_cast<float>(point_1[i].x*18), static_cast<float>(point_1[i].y*18)});
+			tiles.move({28.f, 31.f});
 			window.draw(tiles);
 		}
 		window.draw(frame);

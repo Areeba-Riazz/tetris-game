@@ -51,3 +51,5 @@ vcpkg_installed/
 # OS files
 .DS_Store
 Thumbs.db
+docs/task.md
+docs/implementation_plan.md

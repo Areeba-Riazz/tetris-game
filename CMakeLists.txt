@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find SFML
 # This will work if SFML is installed or provided via vcpkg
-find_package(SFML 2.5 COMPONENTS graphics window system audio REQUIRED)
+find_package(SFML COMPONENTS Graphics Window System Audio REQUIRED)
 
 # Include directories
 include_directories(include)
@@ -19,7 +19,7 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Link SFML libraries
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${PROJECT_NAME} SFML::Graphics SFML::Window SFML::System SFML::Audio)
 
 # Copy assets to build directory on Windows/Linux
 if(WIN32)

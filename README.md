@@ -18,6 +18,3 @@ This project was originally developed as part of the PF course at University. It
 
 ## How to Run
 (Instructions for CMake build will be added soon)
-
-## License
-MIT
