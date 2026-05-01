@@ -2,8 +2,6 @@
 
 A professional, arcade-style Tetris game built from scratch using **Pure C++** and **SFML 3.0**. This project demonstrates advanced procedural programming techniques without the use of Object-Oriented Programming (OOP), strictly following **Programming Fundamentals (PF)** constraints.
 
-![Tetris Gameplay](assets/img/background.png)
-
 ## Game Features
 - **Full Menu System**: Interactive Main Menu with mouse and keyboard navigation.
 - **Ghost Piece (Shadow)**: Real-time projection showing exactly where your block will land.
@@ -54,7 +52,7 @@ This project uses **CMake** and **vcpkg**. Follow these steps to build locally:
    .\tetris-game.exe
    ```
 
-## 📜 Academic Note
+## Academic Note
 This project was developed for a **Programming Fundamentals (PF)** course. It intentionally avoids Classes, Inheritance, and advanced STL containers to demonstrate mastery of core procedural C++ (Arrays, Structs, Loops, and Functions).
 
 ---
